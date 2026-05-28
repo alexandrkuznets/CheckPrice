@@ -7,6 +7,9 @@ class Settings(BaseSettings):
     postgres_port: int
     postgres_host: str
     postgres_db: str
+    secret_key: str
+    algorithm: str
+    access_token_expire_minutes: int
 
     model_config = SettingsConfigDict(env_file="./.env")
 

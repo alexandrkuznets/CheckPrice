@@ -6,6 +6,7 @@ from app.schemas.users import UserCreate
 from app.models.user import User
 from app.core.security import get_password_hash
 
+
 async def create_user_in_db(user: UserCreate, session: AsyncSession) -> User:
     if user.password != user.password2:
         raise HTTPException(status_code=400, detail="Пароли не совпадают")
@@ -24,4 +25,6 @@ async def create_user_in_db(user: UserCreate, session: AsyncSession) -> User:
     except Exception as ex:
         await session.rollback()
         raise HTTPException(status_code=400, detail=str(ex))
+
+
 
