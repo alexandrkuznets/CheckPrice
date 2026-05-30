@@ -11,6 +11,6 @@ class Product(Base):
     marketplace = Column(String)
     product_url = Column(String)
     desired_price = Column(Integer)
-    last_price = Column(Integer)
+    last_price = Column(Integer, default=0)
 
     user = relationship("User", back_populates="products")
