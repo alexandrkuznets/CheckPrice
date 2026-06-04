@@ -1,5 +1,6 @@
+from typing import Dict
 from pydantic_settings import SettingsConfigDict, BaseSettings
-
+import json
 
 class Settings(BaseSettings):
     postgres_user: str
@@ -10,6 +11,7 @@ class Settings(BaseSettings):
     secret_key: str
     algorithm: str
     access_token_expire_minutes: int
+    cookie_wb: Dict[str, str]
 
     model_config = SettingsConfigDict(env_file="./.env")
 

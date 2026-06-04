@@ -6,7 +6,7 @@ import jwt
 
 from app.config import settings
 from app.dependencies.auth import get_user
-from app.models.user import User
+
 
 password_hash = PasswordHash.recommended()
 DUMMY_HASH = password_hash.hash("dummypassword")

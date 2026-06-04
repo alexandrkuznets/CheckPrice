@@ -5,7 +5,6 @@ import models
 from app.routes.users import router as users_router
 from app.routes.login import router as auth_router
 from app.routes.products import router as products_router
-
 app = FastAPI()
 
 app.include_router(users_router)
