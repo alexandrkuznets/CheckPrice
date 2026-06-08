@@ -36,3 +36,4 @@ async def get_products_user(current_user: User, session: AsyncSession) -> List[P
     result = await session.execute(select(Product).where(Product.user_id == current_user.id))
     products = result.scalars().all()
     return products
+
