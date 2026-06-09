@@ -25,4 +25,4 @@ def request_on_wb():
 
 @app.on_after_configure.connect
 def setup_periodic_tasks(sender: Celery, **kwargs):
-    sender.add_periodic_task(30.0, request_on_wb.s(), name='add every 1 hour')
+    sender.add_periodic_task(3600.0, request_on_wb.s(), name='add every 1 hour')
