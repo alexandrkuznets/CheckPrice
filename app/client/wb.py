@@ -21,7 +21,7 @@ session.headers.update({'Accept': 'application/json',
 session.cookies.update(settings.cookie_wb)
 
 
-def get_wb_card_data(article):
+def get_wb_product_data(article):
     url = "https://www.wildberries.ru/__internal/u-card/cards/v4/detail"
 
     params = {
@@ -41,14 +41,15 @@ def get_wb_card_data(article):
         if response.status_code == 200:
             result = response.json()
             product = result['products'][0]
+            name = product["name"]
             price_kopecks = product['sizes'][0]['price']['product']
             price_rub = price_kopecks / 100
-            return price_rub
+            return price_rub, name
         else:
             print("Отправляем письмо хозяину")
     except (KeyError, IndexError) as ex:
         print("Отправляем письмо хозяину")
-        return None
+        return (0, "Ошибка парсинга")
     except (requests.RequestsError, ConnectionError, TimeoutError) as ex:
         print("Отправляем письмо хозяину")
-        return None
+        return (0, "Ошибка парсинга")

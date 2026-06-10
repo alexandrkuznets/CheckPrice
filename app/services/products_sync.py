@@ -1,6 +1,4 @@
-from sqlite3 import SQLITE_ROW
-
-from sqlalchemy import select, update
+from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 
 from app.database.db_config import Session
