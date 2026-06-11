@@ -13,6 +13,10 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int
     rabbitmq_pass: str
     cookie_wb: Dict[str, str]
+    email_sender: str
+    email_password: str
+    email_port: int = 465
+    email_server: str = "smtp.yandex.ru"
 
     model_config = SettingsConfigDict(env_file="./.env")
 
