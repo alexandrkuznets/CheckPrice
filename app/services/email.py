@@ -10,12 +10,12 @@ email_address = settings.email_sender
 email_password = settings.email_password
 
 
-def send_email(body, send_to):
+def send_email(product_name, price, send_to):
     message = MIMEMultipart()
     message["From"] = email_address
     message["To"] = send_to
-    message["Subject"] = "Тестовое письмо"
-    # body = "Привет! Это тестовое письмо, отправленное с помощью Python."
+    message["Subject"] = "Цена на ваш товар снизилась!!"
+    body = f"Товар: {product_name}\n На данный момент его цена: {price} руб"
     message.attach(MIMEText(body, "plain"))
 
     try:
@@ -25,5 +25,5 @@ def send_email(body, send_to):
         text = message.as_string()
         server.sendmail(email_address, send_to, text)
         server.quit()
-    except Exception as e:
-        print(f"Произошла ошибка: {e}")
+    except Exception as ex:
+        pass
