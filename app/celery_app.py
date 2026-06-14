@@ -1,6 +1,16 @@
+import logging
 from celery import Celery
+from celery.utils.log import get_task_logger
 
 from app.config import settings
+
+logger = get_task_logger(__name__)
+logger.setLevel(logging.INFO)
+
+handler = logging.FileHandler("celery.log")
+handler.setFormatter(logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s"))
+logger.addHandler(handler)
+
 
 app = Celery("tasks", broker=f"amqp://admin:{settings.rabbitmq_pass}@localhost:5672//")
 

@@ -3,6 +3,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 from app.config import settings
+from app.celery_app import logger
 
 smtp_server = settings.email_server
 smtp_port = settings.email_port
@@ -19,11 +20,11 @@ def send_email(product_name, price, send_to):
     message.attach(MIMEText(body, "plain"))
 
     try:
+        logger.error(f"Отправка письма: пользователь {send_to}")
         server = smtplib.SMTP_SSL(smtp_server, smtp_port)
         server.login(email_address, email_password)
-
         text = message.as_string()
         server.sendmail(email_address, send_to, text)
         server.quit()
     except Exception as ex:
-        pass
+        logger.error(f"Ошибка отправки письма: {ex}")

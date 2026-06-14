@@ -5,9 +5,11 @@ from fastapi import HTTPException
 from app.schemas.users import UserCreate
 from app.models.user import User
 from app.core.security import get_password_hash
+from app.logger import logger
 
 
 async def create_user_in_db(user: UserCreate, session: AsyncSession) -> User:
+    logger.info(f"Попытка создания пользователя: {user.email}")
     if user.password != user.password2:
         raise HTTPException(status_code=400, detail="Пароли не совпадают")
 
@@ -21,10 +23,9 @@ async def create_user_in_db(user: UserCreate, session: AsyncSession) -> User:
         session.add(user)
         await session.commit()
         await session.refresh(user)
+        logger.info(f"Пользователь создан: {user.email}")
         return user
     except Exception as ex:
+        logger.error(f"Ошибка создания пользователя! {user.email}. {ex}")
         await session.rollback()
         raise HTTPException(status_code=400, detail=str(ex))
-
-
-

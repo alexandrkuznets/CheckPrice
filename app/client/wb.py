@@ -1,6 +1,8 @@
 from curl_cffi import requests
 
 from app.config import settings
+from app.celery_app import logger
+
 
 session = requests.Session(impersonate="chrome120")
 session.headers.update({'Accept': 'application/json',
@@ -37,8 +39,8 @@ def get_wb_product_data(article):
             params=params,
             timeout=10
         )
-
         if response.status_code == 200:
+            logger.info("Успешный запрос! status_code: 200")
             result = response.json()
             product = result['products'][0]
             name = product["name"]
@@ -46,10 +48,10 @@ def get_wb_product_data(article):
             price_rub = price_kopecks / 100
             return price_rub, name
         else:
-            print("Отправляем письмо хозяину")
+            logger.warning(f"Результат запроса к WB: {response.status_code}")
     except (KeyError, IndexError) as ex:
-        print("Отправляем письмо хозяину")
+        logger.error(f"Результат запроса к WB: Ошибка {ex}")
         return (0, "Ошибка парсинга")
     except (requests.RequestsError, ConnectionError, TimeoutError) as ex:
-        print("Отправляем письмо хозяину")
+        logger.error(f"Результат запроса к WB: Ошибка {ex}")
         return (0, "Ошибка парсинга")
