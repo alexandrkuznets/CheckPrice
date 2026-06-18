@@ -12,6 +12,7 @@ handler.setFormatter(logging.Formatter("%(asctime)s - %(name)s - %(levelname)s -
 logger.addHandler(handler)
 
 
-app = Celery("tasks", broker=f"amqp://admin:{settings.rabbitmq_pass}@localhost:5672//")
+app = Celery("tasks", broker=f"amqp://guest:{settings.rabbitmq_pass}@rabbitmq:5672//")
+
 
 app.autodiscover_tasks(["app.tasks"])

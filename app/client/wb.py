@@ -49,6 +49,7 @@ def get_wb_product_data(article):
             return price_rub, name
         else:
             logger.warning(f"Результат запроса к WB: {response.status_code}")
+            return (0, "Ошибка парсинга")
     except (KeyError, IndexError) as ex:
         logger.error(f"Результат запроса к WB: Ошибка {ex}")
         return (0, "Ошибка парсинга")

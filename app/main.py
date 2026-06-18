@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
-import models
 
+from app.models import product, user
 from app.routes.users import router as users_router
 from app.routes.login import router as auth_router
 from app.routes.products import router as products_router
