@@ -9,6 +9,26 @@ smtp_server = settings.email_server
 smtp_port = settings.email_port
 email_address = settings.email_sender
 email_password = settings.email_password
+email_host = settings.email_host
+
+
+def send_email_to_host(message):
+    message = MIMEMultipart()
+    message["From"] = email_address
+    message["To"] = email_host
+    message["Subject"] = "WARNING!!!"
+    body = f"Внимание, что-то пошло не так!\n\n {message}"
+    message.attach(MIMEText(body, "plain"))
+
+    try:
+        logger.error(f"Отправка письма главному {email_host}")
+        server = smtplib.SMTP_SSL(smtp_server, smtp_port)
+        server.login(email_address, email_password)
+        text = message.as_string()
+        server.sendmail(email_address, email_host, text)
+        server.quit()
+    except Exception as ex:
+        logger.error(f"Ошибка отправки письма: {ex}")
 
 
 def send_email(product_name, price, send_to):

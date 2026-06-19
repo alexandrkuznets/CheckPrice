@@ -2,7 +2,7 @@ from curl_cffi import requests
 
 from app.config import settings
 from app.celery_app import logger
-
+from app.services.email import send_email_to_host
 
 session = requests.Session(impersonate="chrome120")
 session.headers.update({'Accept': 'application/json',
@@ -49,10 +49,13 @@ def get_wb_product_data(article):
             return price_rub, name
         else:
             logger.warning(f"Результат запроса к WB: {response.status_code}")
+            send_email_to_host(f"{response}")
             return (0, "Ошибка парсинга")
     except (KeyError, IndexError) as ex:
         logger.error(f"Результат запроса к WB: Ошибка {ex}")
+        send_email_to_host(f"{ex}")
         return (0, "Ошибка парсинга")
     except (requests.RequestsError, ConnectionError, TimeoutError) as ex:
         logger.error(f"Результат запроса к WB: Ошибка {ex}")
+        send_email_to_host(f"{ex}")
         return (0, "Ошибка парсинга")

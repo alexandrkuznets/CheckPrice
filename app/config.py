@@ -17,6 +17,7 @@ class Settings(BaseSettings):
     email_password: str
     email_port: int = 465
     email_server: str = "smtp.yandex.ru"
+    email_host: str
 
     model_config = SettingsConfigDict(env_file="./.env")
 
