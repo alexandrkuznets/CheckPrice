@@ -11,7 +11,8 @@ class Settings(BaseSettings):
     secret_key: str
     algorithm: str
     access_token_expire_minutes: int
-    rabbitmq_pass: str
+    rabbitmq_default_user: str
+    rabbitmq_default_password: str
     cookie_wb: Dict[str, str]
     email_sender: str
     email_password: str
