@@ -9,29 +9,34 @@ from sqlalchemy import select, delete, and_
 from app.models.user import User
 from app.models.product import Product
 from app.logger import logger
-
+from app.client.wb import get_wb_product_data
 
 async def create_product_in_db(
         marketplace: str,
-        product_url: str,
+        article: str,
         desired_price: int,
         current_user: User,
         session: AsyncSession
 ) -> Product:
+    price, product_name = get_wb_product_data(article)
+    if not price:
+        raise HTTPException(status_code=400, detail="Произошла ошибка или артикул указан неверно")
     try:
-        logger.info(f"Создание записи БД: Пользователь {current_user.email} Артикул {product_url}")
+        logger.info(f"Создание записи БД: Пользователь {current_user.email} Артикул {article}")
         product = Product(
             user_id=current_user.id,
             marketplace=marketplace,
-            product_url=product_url,
-            desired_price=desired_price
+            article=article,
+            desired_price=desired_price,
+            last_price=price,
+            product_name=product_name
         )
         session.add(product)
         await session.commit()
         await session.refresh(product)
         return product
     except SQLAlchemyError as ex:
-        logger.error(f"Ошибка создания записи в БД: Пользователь {current_user.email} Артикул {product_url}. {ex}")
+        logger.error(f"Ошибка создания записи в БД: Пользователь {current_user.email} Артикул {article}. {ex}")
         await session.rollback()
         raise HTTPException(status_code=400, detail=str(ex))
 

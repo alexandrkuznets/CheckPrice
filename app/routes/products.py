@@ -15,7 +15,7 @@ router = APIRouter()
 @router.post("/products", status_code=status.HTTP_201_CREATED)
 async def create_product(
         marketplace: str,
-        product_url: str,
+        article: str,
         desired_price: int,
         current_user: Annotated[User, Depends(get_current_active_user)],
         session: AsyncSession = Depends(get_session)
@@ -23,7 +23,7 @@ async def create_product(
     logger.info(f"POST запрос к /products на создание товара: user_id={current_user.id}")
     result = await create_product_in_db(
         marketplace,
-        product_url,
+        article,
         desired_price,
         current_user,
         session

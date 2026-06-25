@@ -5,13 +5,13 @@ from app.config import settings
 
 async_engine = create_async_engine(f"postgresql+asyncpg://"
                                    f"{settings.postgres_user}:{settings.postgres_password}@"
-                                   f"postgres:{settings.postgres_port}/{settings.postgres_db}")
+                                   f"localhost:{settings.postgres_port}/{settings.postgres_db}")
 Async_session = async_sessionmaker(async_engine, class_=AsyncSession, expire_on_commit=True)
 
 
 sync_engine = create_engine(f"postgresql://"
                         f"{settings.postgres_user}:{settings.postgres_password}@"
-                        f"postgres:{settings.postgres_port}/{settings.postgres_db}")
+                        f"localhost:{settings.postgres_port}/{settings.postgres_db}")
 
 Session = sessionmaker(bind=sync_engine)
 

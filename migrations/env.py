@@ -16,7 +16,7 @@ config.set_main_option(
     "sqlalchemy.url",
     f"postgresql://"
     f"{settings.postgres_user}:{settings.postgres_password}@"
-    f"postgres:{settings.postgres_port}/{settings.postgres_db}")
+    f"localhost:{settings.postgres_port}/{settings.postgres_db}")
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

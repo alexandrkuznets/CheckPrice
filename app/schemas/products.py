@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 class ProductBase(BaseModel):
     marketplace: str
-    product_url: str
+    article: str
     desired_price: int
 
 
@@ -15,3 +15,4 @@ class ProductResponse(ProductBase):
     id: int
     user_id: int
     last_price: int
+    product_name: str

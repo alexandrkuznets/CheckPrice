@@ -9,8 +9,9 @@ class Product(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"))
     marketplace = Column(String)
-    product_url = Column(String)
+    article = Column(String)
     desired_price = Column(Integer)
     last_price = Column(Integer, default=0)
+    product_name = Column(String)
 
     user = relationship("User", back_populates="products")

@@ -12,12 +12,12 @@ email_password = settings.email_password
 email_host = settings.email_host
 
 
-def send_email_to_host(message):
+def send_email_to_host(message_in_body):
     message = MIMEMultipart()
     message["From"] = email_address
     message["To"] = email_host
     message["Subject"] = "WARNING!!!"
-    body = f"Внимание, что-то пошло не так!\n\n {message}"
+    body = f"Внимание, что-то пошло не так!\n\n {message_in_body}"
     message.attach(MIMEText(body, "plain"))
 
     try:
