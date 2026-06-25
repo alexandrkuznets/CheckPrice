@@ -16,14 +16,14 @@ def request_on_wb():
     for product in products:
         sec = randint(1, 5)
         sleep(sec)
-        price, product_name = get_wb_product_data(product.product_url)
+        price, product_name = get_wb_product_data(product.article)
         if price == 0:
             continue
         if price != product.last_price:
             if price <= product.desired_price or price < product.last_price:
                 send_email(product_name=product_name, price=price, send_to=product.email)
 
-            update_product(article=product.product_url, new_price=price)
+            update_product(article=product.article, new_price=price)
 
 
 @app.on_after_configure.connect
