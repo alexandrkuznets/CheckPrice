@@ -10,7 +10,7 @@ def get_products():
     try:
         with Session() as session:
             result = session.execute(
-                select(User.email, Product.product_url, Product.last_price, Product.desired_price).join(User))
+                select(User.email, Product.article, Product.last_price, Product.desired_price).join(User))
             return [row for row in result.fetchall()]
     except SQLAlchemyError as ex:
 
@@ -20,7 +20,7 @@ def get_products():
 def update_product(article, new_price):
     try:
         with Session() as session:
-            result = session.execute(select(Product).where(Product.product_url == article))
+            result = session.execute(select(Product).where(Product.article == article))
             product = result.scalar_one_or_none()
             product.last_price = new_price
             session.commit()
