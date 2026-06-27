@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta, timezone
 from pwdlib import PasswordHash
-from sqlalchemy import update
 from sqlalchemy.ext.asyncio import AsyncSession
 import jwt
 
@@ -38,5 +37,5 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     else:
         expire = datetime.now(timezone.utc) + timedelta(minutes=15)
     to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, settings.secret_key, algorithm=settings.algorithm)
+    encoded_jwt = jwt.encode(to_encode, settings.secret_key.get_secret_value(), algorithm=settings.algorithm)
     return encoded_jwt

@@ -8,7 +8,7 @@ from app.celery_app import logger
 smtp_server = settings.email_server
 smtp_port = settings.email_port
 email_address = settings.email_sender
-email_password = settings.email_password
+email_password = settings.email_password.get_secret_value()
 email_host = settings.email_host
 
 
