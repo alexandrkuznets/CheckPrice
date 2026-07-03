@@ -87,3 +87,10 @@ venv/
 
 # VS Code
 .vscode/
+
+tests/
+test/
+**/tests/
+**/test_*.py
+**/*_test.py
+**/__pycache__/
